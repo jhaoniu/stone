@@ -104,14 +104,14 @@ public class StoneDB {
         File dir = new File(dataDir);
         String[] paths = dir.list();
         for (String path : paths) {
-            Scanner scanner = new Scanner(new BufferedReader(new FileReader(new File(dir, path))));
-            while (scanner.hasNext()) {
-                String line = scanner.nextLine();
+            BufferedReader reader=new BufferedReader(new FileReader(new File(dir, path)));
+            String line;
+            while ((line = reader.readLine()) != null) {
                 Cell cell = keyValueGenerator.generateKeyValue(line);
                 iMemTable.append(cell);
             }
             iMemTable.flush();
-            scanner.close();
+            reader.close();
         }
     }
 
